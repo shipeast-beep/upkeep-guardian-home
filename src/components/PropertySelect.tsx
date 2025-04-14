@@ -60,7 +60,13 @@ const PropertySelect: React.FC = () => {
   });
   
   const onSubmit = (data: PropertyFormValues) => {
-    addProperty(data);
+    // Make sure name is always provided even if it's empty string
+    const propertyData = {
+      ...data,
+      name: data.name || "Unnamed Property", // Ensure name is always present
+    };
+    
+    addProperty(propertyData);
     toast.success("Property added successfully");
     setOpen(false);
     form.reset();

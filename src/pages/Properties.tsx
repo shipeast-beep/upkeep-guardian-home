@@ -77,11 +77,17 @@ const Properties: React.FC = () => {
   });
   
   const onSubmit = (data: PropertyFormValues) => {
+    // Ensure name is always provided
+    const propertyData = {
+      ...data,
+      name: data.name || "Unnamed Property", // Ensure name is always present
+    };
+    
     if (editingPropertyId) {
-      updateProperty(editingPropertyId, data);
+      updateProperty(editingPropertyId, propertyData);
       toast.success("Property updated successfully");
     } else {
-      addProperty(data);
+      addProperty(propertyData);
       toast.success("Property added successfully");
     }
     setDialogOpen(false);
