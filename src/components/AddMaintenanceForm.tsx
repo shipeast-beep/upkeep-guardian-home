@@ -5,7 +5,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, ImagePlus } from "lucide-react";
+import { 
+  Calendar as CalendarIcon, 
+  ImagePlus,
+  Zap,
+  Droplet,
+  Flame,
+  Leaf,
+  Thermometer,
+  Fan,
+  Monitor,
+  Building,
+  Package
+} from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
@@ -36,16 +48,16 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { Category, RecurringPeriod } from "../types";
 
-const CATEGORIES: { value: Category; label: string }[] = [
-  { value: "electrical", label: "Electrical" },
-  { value: "plumbing", label: "Plumbing" },
-  { value: "gas", label: "Gas" },
-  { value: "garden", label: "Garden" },
-  { value: "heating", label: "Heating" },
-  { value: "air_conditioning", label: "Air Conditioning" },
-  { value: "appliances", label: "Appliances" },
-  { value: "structural", label: "Structural" },
-  { value: "other", label: "Other" },
+const CATEGORIES: { value: Category; label: string; icon: React.ElementType }[] = [
+  { value: "electrical", label: "Electrical", icon: Zap },
+  { value: "plumbing", label: "Plumbing", icon: Droplet },
+  { value: "gas", label: "Gas", icon: Flame },
+  { value: "garden", label: "Garden", icon: Leaf },
+  { value: "heating", label: "Heating", icon: Thermometer },
+  { value: "air_conditioning", label: "Air Conditioning", icon: Fan },
+  { value: "appliances", label: "Appliances", icon: Monitor },
+  { value: "structural", label: "Structural", icon: Building },
+  { value: "other", label: "Other", icon: Package },
 ];
 
 const RECURRING_PERIODS: { value: RecurringPeriod; label: string }[] = [
@@ -109,6 +121,10 @@ const AddMaintenanceForm: React.FC = () => {
       ...data,
       propertyId: selectedPropertyId,
       photo: photoPreview || undefined,
+      title: data.title, // Ensure title is included
+      date: data.date, // Ensure date is included
+      category: data.category, // Ensure category is included
+      recurringPeriod: data.recurringPeriod // Ensure recurringPeriod is included
     });
     
     toast.success("Maintenance event added successfully");
@@ -160,11 +176,17 @@ const AddMaintenanceForm: React.FC = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {CATEGORIES.map((category) => (
-                      <SelectItem key={category.value} value={category.value}>
-                        {category.label}
-                      </SelectItem>
-                    ))}
+                    {CATEGORIES.map((category) => {
+                      const Icon = category.icon;
+                      return (
+                        <SelectItem key={category.value} value={category.value} className="flex items-center">
+                          <div className="flex items-center gap-2">
+                            <Icon className="h-4 w-4" />
+                            <span>{category.label}</span>
+                          </div>
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
                 <FormDescription>

@@ -9,7 +9,19 @@ import {
   CardHeader,
   CardTitle 
 } from "@/components/ui/card";
-import { CalendarClock, Clock } from "lucide-react";
+import { 
+  CalendarClock, 
+  Clock,
+  Zap,
+  Droplet,
+  Flame,
+  Leaf,
+  Thermometer,
+  Fan,
+  Monitor,
+  Building,
+  Package
+} from "lucide-react";
 
 // Map categories to colors
 const categoryColors: Record<string, string> = {
@@ -24,6 +36,19 @@ const categoryColors: Record<string, string> = {
   other: "bg-slate-100 text-slate-800 hover:bg-slate-200",
 };
 
+// Map categories to icons
+const categoryIcons: Record<string, React.ElementType> = {
+  electrical: Zap,
+  plumbing: Droplet,
+  gas: Flame,
+  garden: Leaf,
+  heating: Thermometer,
+  air_conditioning: Fan,
+  appliances: Monitor,
+  structural: Building,
+  other: Package,
+};
+
 interface MaintenanceCardProps {
   maintenance: MaintenanceEvent;
   property?: Property;
@@ -36,6 +61,7 @@ const MaintenanceCard: React.FC<MaintenanceCardProps> = ({
   showProperty = false,
 }) => {
   const categoryColor = categoryColors[maintenance.category] || categoryColors.other;
+  const CategoryIcon = categoryIcons[maintenance.category] || categoryIcons.other;
   const date = new Date(maintenance.date);
   
   return (
@@ -57,8 +83,9 @@ const MaintenanceCard: React.FC<MaintenanceCardProps> = ({
               <CardDescription>{property.name}</CardDescription>
             )}
           </div>
-          <Badge className={categoryColor}>
-            {maintenance.category.replace("_", " ")}
+          <Badge className={`${categoryColor} flex items-center gap-1`}>
+            <CategoryIcon className="h-3 w-3" />
+            <span>{maintenance.category.replace("_", " ")}</span>
           </Badge>
         </div>
       </CardHeader>
