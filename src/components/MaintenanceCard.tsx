@@ -1,7 +1,6 @@
 
 import { MaintenanceEvent, Property } from "@/types";
 import { formatDistanceToNow } from "date-fns";
-import { cs } from "date-fns/locale/cs";
 import { Badge } from "@/components/ui/badge";
 import { 
   Card,

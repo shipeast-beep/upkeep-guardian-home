@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Bell, Home, Menu, Plus, Settings } from "lucide-react";
+import { Bell, Home, Menu, Plus, Settings, LayoutDashboard, Building2, ClipboardList } from "lucide-react";
 import { useStore } from "@/store/useStore";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -38,14 +38,14 @@ const AppHeader: React.FC = () => {
                     to="/" 
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
                   >
-                    <Home className="h-4 w-4" />
+                    <LayoutDashboard className="h-4 w-4" />
                     Dashboard
                   </Link>
                   <Link 
                     to="/properties" 
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
                   >
-                    <Home className="h-4 w-4" />
+                    <Building2 className="h-4 w-4" />
                     Nemovitosti
                   </Link>
                   <Link 
@@ -59,7 +59,7 @@ const AppHeader: React.FC = () => {
                     to="/history" 
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
                   >
-                    <Home className="h-4 w-4" />
+                    <ClipboardList className="h-4 w-4" />
                     Historie údržby
                   </Link>
                   <Link 
@@ -76,7 +76,7 @@ const AppHeader: React.FC = () => {
           
           <Link to="/" className="flex items-center gap-2">
             <div className="rounded-full bg-upkeep-600 w-8 h-8 flex items-center justify-center">
-              <Home className="h-4 w-4 text-white" />
+              <LayoutDashboard className="h-4 w-4 text-white" />
             </div>
             <span className="font-semibold text-xl hidden md:inline-block">Udrž to!</span>
           </Link>

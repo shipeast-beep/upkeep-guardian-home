@@ -6,7 +6,7 @@ import MaintenanceList from "@/components/MaintenanceList";
 import { useStore } from "@/store/useStore";
 import { Category } from "@/types";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, ClipboardList } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -72,7 +72,10 @@ const MaintenanceHistory: React.FC = () => {
         <PropertySelect />
         
         <div className="mb-6 space-y-4">
-          <h1 className="text-2xl font-bold">Maintenance History</h1>
+          <div className="flex items-center gap-2">
+            <ClipboardList className="h-5 w-5 text-muted-foreground" />
+            <h1 className="text-2xl font-bold">Maintenance History</h1>
+          </div>
           
           <div className="grid gap-4 md:grid-cols-3">
             <div className="relative">

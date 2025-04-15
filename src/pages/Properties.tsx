@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import AppHeader from "@/components/AppHeader";
 import { useStore } from "@/store/useStore";
-import { Home, Pencil, Trash2, Plus } from "lucide-react";
+import { Building2, Pencil, Trash2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -125,7 +125,10 @@ const Properties: React.FC = () => {
       <AppHeader />
       <main className="container py-6">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold">My Properties</h1>
+          <div className="flex items-center gap-2">
+            <Building2 className="h-5 w-5 text-muted-foreground" />
+            <h1 className="text-2xl font-bold">My Properties</h1>
+          </div>
           <Button onClick={openAddDialog}>
             <Plus className="h-4 w-4 mr-2" />
             Add Property
@@ -134,7 +137,7 @@ const Properties: React.FC = () => {
         
         {properties.length === 0 ? (
           <div className="p-12 text-center border rounded-lg bg-muted/50">
-            <Home className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+            <Building2 className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
             <p className="text-muted-foreground">No properties yet</p>
             <Button onClick={openAddDialog} className="mt-4">
               <Plus className="h-4 w-4 mr-2" />

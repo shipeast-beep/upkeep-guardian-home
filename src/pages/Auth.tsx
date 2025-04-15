@@ -5,14 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
-import { Mail, Lock, User } from "lucide-react";
+import { Mail, Lock, User, AlertTriangle } from "lucide-react";
 import { Navigate } from "react-router-dom";
 import { toast } from "@/components/ui/sonner";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { user, signInWithEmail, signInWithGoogle, signUp } = useAuth();
 
   // If user is already logged in, redirect to home
@@ -27,14 +29,15 @@ const Auth = () => {
     }
 
     setIsLoading(true);
+    setErrorMessage(null);
     try {
       if (isSignUp) {
         await signUp(email, password);
       } else {
         await signInWithEmail(email, password);
       }
-    } catch (error) {
-      // Error is already handled in the auth context
+    } catch (error: any) {
+      setErrorMessage(error.message || "Nastala chyba při přihlašování");
     } finally {
       setIsLoading(false);
     }
@@ -42,10 +45,11 @@ const Auth = () => {
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
+    setErrorMessage(null);
     try {
       await signInWithGoogle();
-    } catch (error) {
-      // Error is already handled in the auth context
+    } catch (error: any) {
+      setErrorMessage("Nastala chyba při přihlašování přes Google");
     } finally {
       setIsLoading(false);
     }
@@ -66,6 +70,14 @@ const Auth = () => {
             <TabsTrigger value="signup">Registrace</TabsTrigger>
           </TabsList>
           <CardContent className="pt-4">
+            {errorMessage && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Chyba</AlertTitle>
+                <AlertDescription>{errorMessage}</AlertDescription>
+              </Alert>
+            )}
+            
             <div className="space-y-4">
               <div className="space-y-2">
                 <div className="relative">

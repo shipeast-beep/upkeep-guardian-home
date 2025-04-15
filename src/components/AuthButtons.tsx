@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
-import { LogIn, LogOut, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 
 export const AuthButtons = () => {
   const { user, signOut } = useAuth();
@@ -29,7 +29,7 @@ export const AuthButtons = () => {
   return (
     <Link to="/auth">
       <Button variant="outline" size="sm" className="gap-2">
-        <LogIn className="h-4 w-4" />
+        <User className="h-4 w-4" />
         <span className="hidden md:inline">Přihlásit se</span>
       </Button>
     </Link>

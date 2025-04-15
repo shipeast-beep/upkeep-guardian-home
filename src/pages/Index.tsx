@@ -6,7 +6,7 @@ import PropertySelect from "@/components/PropertySelect";
 import MaintenanceList from "@/components/MaintenanceList";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Plus, Wrench, ArrowDown } from "lucide-react";
+import { Plus, Wrench, ArrowDown, LayoutDashboard } from "lucide-react";
 
 const Index: React.FC = () => {
   const { 
@@ -79,7 +79,7 @@ const Index: React.FC = () => {
         ) : (
           <div className="text-center my-12">
             <div className="inline-block p-3 rounded-full bg-upkeep-100 text-upkeep-600 mb-4">
-              <Wrench className="h-6 w-6" />
+              <LayoutDashboard className="h-6 w-6" />
             </div>
             <h1 className="text-3xl font-bold mb-2">Vítejte v aplikaci Udrž to!</h1>
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
