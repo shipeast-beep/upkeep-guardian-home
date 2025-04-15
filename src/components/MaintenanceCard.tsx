@@ -1,7 +1,7 @@
 
 import { MaintenanceEvent, Property } from "@/types";
 import { formatDistanceToNow } from "date-fns";
-import { cs } from "date-fns/locale";
+import { cs } from "date-fns/locale/cs";
 import { Badge } from "@/components/ui/badge";
 import { 
   Card,
@@ -107,7 +107,7 @@ const MaintenanceCard: React.FC<MaintenanceCardProps> = ({
       <CardContent className="p-4 pt-0 space-y-2">
         <div className="flex items-center text-sm text-muted-foreground">
           <Clock className="mr-2 h-4 w-4" />
-          {formatDistanceToNow(date, { addSuffix: true, locale: cs })}
+          {formatDistanceToNow(date, { addSuffix: true })}
         </div>
         {maintenance.recurringPeriod !== "none" && (
           <div className="flex items-center text-sm text-muted-foreground">
