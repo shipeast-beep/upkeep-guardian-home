@@ -48,7 +48,7 @@ import {
 } from "@/components/ui/form";
 
 const propertyFormSchema = z.object({
-  name: z.string().min(1, "Property name is required"),
+  name: z.string().min(1, "Název nemovitosti je povinný"),
   address: z.string().optional(),
   type: z.enum(["house", "apartment", "cottage", "other"]),
 });
@@ -80,15 +80,15 @@ const Properties: React.FC = () => {
     // Ensure name is always provided
     const propertyData = {
       ...data,
-      name: data.name || "Unnamed Property", // Ensure name is always present
+      name: data.name || "Nepojmenovaná nemovitost", // Ensure name is always present
     };
     
     if (editingPropertyId) {
       updateProperty(editingPropertyId, propertyData);
-      toast.success("Property updated successfully");
+      toast.success("Nemovitost byla úspěšně aktualizována");
     } else {
       addProperty(propertyData);
-      toast.success("Property added successfully");
+      toast.success("Nemovitost byla úspěšně přidána");
     }
     setDialogOpen(false);
     setEditingPropertyId(null);
@@ -127,21 +127,18 @@ const Properties: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <Building2 className="h-5 w-5 text-muted-foreground" />
-            <h1 className="text-2xl font-bold">My Properties</h1>
+            <h1 className="text-2xl font-bold">Moje nemovitosti</h1>
           </div>
-          <Button onClick={openAddDialog}>
-            <Plus className="h-4 w-4 mr-2" />
-            Add Property
-          </Button>
+          {/* Tlačítko Add Property bylo odstraněno */}
         </div>
         
         {properties.length === 0 ? (
           <div className="p-12 text-center border rounded-lg bg-muted/50">
             <Building2 className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <p className="text-muted-foreground">No properties yet</p>
+            <p className="text-muted-foreground">Zatím nemáte žádné nemovitosti</p>
             <Button onClick={openAddDialog} className="mt-4">
               <Plus className="h-4 w-4 mr-2" />
-              Add Your First Property
+              Přidejte svou první nemovitost
             </Button>
           </div>
         ) : (
@@ -151,7 +148,9 @@ const Properties: React.FC = () => {
                 <CardHeader className="bg-upkeep-50 p-4">
                   <div className="flex items-start justify-between">
                     <CardTitle className="text-lg">{property.name}</CardTitle>
-                    <Badge>{property.type}</Badge>
+                    <Badge>{property.type === "house" ? "Dům" : 
+                           property.type === "apartment" ? "Byt" : 
+                           property.type === "cottage" ? "Chata" : "Jiné"}</Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="p-4">
@@ -161,7 +160,7 @@ const Properties: React.FC = () => {
                     </p>
                   )}
                   <p className="text-sm">
-                    <span className="font-medium">{getMaintenanceCount(property.id)}</span> maintenance events
+                    <span className="font-medium">{getMaintenanceCount(property.id)}</span> záznamů údržby
                   </p>
                 </CardContent>
                 <CardFooter className="p-4 pt-0 flex justify-between">
@@ -169,10 +168,10 @@ const Properties: React.FC = () => {
                     variant="outline"
                     onClick={() => {
                       selectProperty(property.id);
-                      toast.success(`Switched to ${property.name}`);
+                      toast.success(`Přepnuto na ${property.name}`);
                     }}
                   >
-                    Select
+                    Vybrat
                   </Button>
                   <div className="flex gap-2">
                     <Button 
@@ -190,21 +189,21 @@ const Properties: React.FC = () => {
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
-                          <AlertDialogTitle>Delete property</AlertDialogTitle>
+                          <AlertDialogTitle>Smazat nemovitost</AlertDialogTitle>
                           <AlertDialogDescription>
-                            This will permanently delete this property and all its {getMaintenanceCount(property.id)} maintenance events. 
-                            This action cannot be undone.
+                            Tímto trvale smažete tuto nemovitost a všech {getMaintenanceCount(property.id)} záznamů údržby. 
+                            Tuto akci nelze vrátit zpět.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogCancel>Zrušit</AlertDialogCancel>
                           <AlertDialogAction 
                             onClick={() => {
                               deleteProperty(property.id);
-                              toast.success("Property deleted successfully");
+                              toast.success("Nemovitost byla úspěšně smazána");
                             }}
                           >
-                            Delete
+                            Smazat
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
@@ -221,12 +220,12 @@ const Properties: React.FC = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {editingPropertyId ? "Edit Property" : "Add New Property"}
+              {editingPropertyId ? "Upravit nemovitost" : "Přidat novou nemovitost"}
             </DialogTitle>
             <DialogDescription>
               {editingPropertyId 
-                ? "Update details about your property" 
-                : "Add details about your property to track maintenance events"}
+                ? "Aktualizujte informace o své nemovitosti" 
+                : "Přidejte detaily o své nemovitosti pro sledování údržby"}
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -236,9 +235,9 @@ const Properties: React.FC = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Property Name</FormLabel>
+                    <FormLabel>Název nemovitosti</FormLabel>
                     <FormControl>
-                      <Input placeholder="My Home" {...field} />
+                      <Input placeholder="Můj dům" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -249,9 +248,9 @@ const Properties: React.FC = () => {
                 name="address"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Address (Optional)</FormLabel>
+                    <FormLabel>Adresa (Volitelné)</FormLabel>
                     <FormControl>
-                      <Input placeholder="123 Main St" {...field} />
+                      <Input placeholder="Hlavní 123" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -262,21 +261,21 @@ const Properties: React.FC = () => {
                 name="type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Property Type</FormLabel>
+                    <FormLabel>Typ nemovitosti</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a property type" />
+                          <SelectValue placeholder="Vyberte typ nemovitosti" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="house">House</SelectItem>
-                        <SelectItem value="apartment">Apartment</SelectItem>
-                        <SelectItem value="cottage">Cottage</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
+                        <SelectItem value="house">Dům</SelectItem>
+                        <SelectItem value="apartment">Byt</SelectItem>
+                        <SelectItem value="cottage">Chata</SelectItem>
+                        <SelectItem value="other">Jiné</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -284,8 +283,8 @@ const Properties: React.FC = () => {
                 )}
               />
               <DialogFooter>
-                <Button type="submit">
-                  {editingPropertyId ? "Save Changes" : "Add Property"}
+                <Button type="submit" className="w-full">
+                  {editingPropertyId ? "Uložit změny" : "Přidat nemovitost"}
                 </Button>
               </DialogFooter>
             </form>
@@ -297,3 +296,4 @@ const Properties: React.FC = () => {
 };
 
 export default Properties;
+

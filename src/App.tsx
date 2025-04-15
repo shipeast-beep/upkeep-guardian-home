@@ -39,7 +39,7 @@ const App = () => (
             <Route path="/export-pdf" element={<ExportPDF />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            {/* PŘIDEJTE VŠECHNY VLASTNÍ CESTY NAD ZACHYTÁVACÍ CESTOU "*" */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
