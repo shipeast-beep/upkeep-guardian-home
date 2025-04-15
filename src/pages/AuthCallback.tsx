@@ -29,9 +29,9 @@ const AuthCallback = () => {
     <div className="flex min-h-screen items-center justify-center">
       <div className="rounded-md bg-white p-8 shadow-md">
         {error ? (
-          <p className="text-destructive">Error: {error}</p>
+          <p className="text-destructive">Chyba: {error}</p>
         ) : (
-          <p>Completing authentication, please wait...</p>
+          <p>Dokončování přihlášení, prosím čekejte...</p>
         )}
       </div>
     </div>

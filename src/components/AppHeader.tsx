@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Bell, Home, Menu, Plus, Settings, LayoutDashboard, Building2, ClipboardList } from "lucide-react";
+import { Bell, Home, Menu, Plus, Settings, LayoutDashboard, Building2, ClipboardList, User } from "lucide-react";
 import { useStore } from "@/store/useStore";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -38,7 +38,7 @@ const AppHeader: React.FC = () => {
                     to="/" 
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
                   >
-                    <LayoutDashboard className="h-4 w-4" />
+                    <Home className="h-4 w-4" />
                     Dashboard
                   </Link>
                   <Link 
@@ -76,7 +76,7 @@ const AppHeader: React.FC = () => {
           
           <Link to="/" className="flex items-center gap-2">
             <div className="rounded-full bg-upkeep-600 w-8 h-8 flex items-center justify-center">
-              <LayoutDashboard className="h-4 w-4 text-white" />
+              <Home className="h-4 w-4 text-white" />
             </div>
             <span className="font-semibold text-xl hidden md:inline-block">Udrž to!</span>
           </Link>

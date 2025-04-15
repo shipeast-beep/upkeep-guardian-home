@@ -21,12 +21,12 @@ const Notifications: React.FC = () => {
     <div className="min-h-screen bg-background">
       <AppHeader />
       <main className="container py-6">
-        <h1 className="text-2xl font-bold mb-6">Notifications</h1>
+        <h1 className="text-2xl font-bold mb-6">Oznámení</h1>
         
         {sortedNotifications.length === 0 ? (
           <div className="p-12 text-center border rounded-lg bg-muted/50">
             <Bell className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <p className="text-muted-foreground">No notifications yet</p>
+            <p className="text-muted-foreground">Zatím žádná oznámení</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -51,7 +51,7 @@ const Notifications: React.FC = () => {
                         )}
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        {property?.name} - Due: {format(new Date(notification.date), "PPP")}
+                        {property?.name} - Termín: {format(new Date(notification.date), "PPP")}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -62,11 +62,11 @@ const Notifications: React.FC = () => {
                           onClick={() => markNotificationAsRead(notification.id)}
                         >
                           <Check className="h-4 w-4 mr-2" />
-                          Mark as read
+                          Označit jako přečtené
                         </Button>
                       )}
                       <Link to={`/maintenance/${notification.maintenanceEventId}`}>
-                        <Button size="sm">View</Button>
+                        <Button size="sm">Zobrazit</Button>
                       </Link>
                     </div>
                   </CardContent>

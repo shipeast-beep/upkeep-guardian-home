@@ -31,11 +31,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
         
         if (event === 'SIGNED_IN') {
-          toast.success("Successfully signed in!");
+          toast.success("Úspěšně přihlášeno!");
           navigate('/');
         } 
         else if (event === 'SIGNED_OUT') {
-          toast.info("Signed out");
+          toast.info("Odhlášeno");
           navigate('/auth');
         }
       }
@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
     } catch (error: any) {
-      toast.error(error.message || "Error signing in");
+      toast.error(error.message || "Chyba při přihlašování");
       throw error;
     }
   };
@@ -71,7 +71,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       if (error) throw error;
     } catch (error: any) {
-      toast.error(error.message || "Error signing in with Google");
+      toast.error(error.message || "Chyba při přihlašování přes Google");
       throw error;
     }
   };
@@ -86,9 +86,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       });
       if (error) throw error;
-      toast.success("Verification email sent! Check your inbox.");
+      toast.success("Ověřovací email byl odeslán! Zkontrolujte svou schránku.");
     } catch (error: any) {
-      toast.error(error.message || "Error creating account");
+      toast.error(error.message || "Chyba při vytváření účtu");
       throw error;
     }
   };
@@ -98,7 +98,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
     } catch (error: any) {
-      toast.error(error.message || "Error signing out");
+      toast.error(error.message || "Chyba při odhlašování");
       throw error;
     }
   };
