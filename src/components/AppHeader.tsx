@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Bell, Home, Menu, Plus, Settings, LayoutDashboard, Building2, ClipboardList, User } from "lucide-react";
+import { Bell, Home, Menu, Plus, Settings, LayoutDashboard, Building2, ClipboardList, User, FileText, CreditCard } from "lucide-react";
 import { useStore } from "@/store/useStore";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -38,8 +38,8 @@ const AppHeader: React.FC = () => {
                     to="/" 
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
                   >
-                    <Home className="h-4 w-4" />
-                    Dashboard
+                    <LayoutDashboard className="h-4 w-4" />
+                    Přehled
                   </Link>
                   <Link 
                     to="/properties" 
@@ -61,6 +61,20 @@ const AppHeader: React.FC = () => {
                   >
                     <ClipboardList className="h-4 w-4" />
                     Historie údržby
+                  </Link>
+                  <Link 
+                    to="/export-pdf" 
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
+                  >
+                    <FileText className="h-4 w-4" />
+                    Export do PDF
+                  </Link>
+                  <Link 
+                    to="/pricing" 
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
+                  >
+                    <CreditCard className="h-4 w-4" />
+                    Ceník
                   </Link>
                   <Link 
                     to="/settings" 
@@ -146,6 +160,13 @@ const AppHeader: React.FC = () => {
               )}
             </DropdownMenuContent>
           </DropdownMenu>
+
+          <Link to="/settings">
+            <Button variant="ghost" size="icon">
+              <Settings className="h-5 w-5" />
+              <span className="sr-only">Nastavení</span>
+            </Button>
+          </Link>
         </div>
       </div>
     </header>

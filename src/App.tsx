@@ -10,6 +10,9 @@ import MaintenanceHistory from "./pages/MaintenanceHistory";
 import MaintenanceDetail from "./pages/MaintenanceDetail";
 import Notifications from "./pages/Notifications";
 import Properties from "./pages/Properties";
+import Settings from "./pages/Settings";
+import Pricing from "./pages/Pricing";
+import ExportPDF from "./pages/ExportPDF";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import AuthCallback from "./pages/AuthCallback";
@@ -31,6 +34,9 @@ const App = () => (
             <Route path="/maintenance/:id" element={<MaintenanceDetail />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/properties" element={<Properties />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/export-pdf" element={<ExportPDF />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
