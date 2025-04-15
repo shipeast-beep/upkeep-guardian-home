@@ -22,7 +22,7 @@ const Auth = () => {
 
   const handleEmailAuth = async (isSignUp: boolean) => {
     if (!email || !password) {
-      toast.error("Please enter both email and password");
+      toast.error("Prosím vyplňte email i heslo");
       return;
     }
 
@@ -55,15 +55,15 @@ const Auth = () => {
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-2xl font-bold">UpKeep Guardian</CardTitle>
+          <CardTitle className="text-2xl font-bold">Udrž to!</CardTitle>
           <CardDescription>
-            Sign in or create an account to track your property maintenance
+            Přihlaste se nebo si vytvořte účet pro správu údržby nemovitostí
           </CardDescription>
         </CardHeader>
         <Tabs defaultValue="login" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">Login</TabsTrigger>
-            <TabsTrigger value="signup">Sign Up</TabsTrigger>
+            <TabsTrigger value="login">Přihlášení</TabsTrigger>
+            <TabsTrigger value="signup">Registrace</TabsTrigger>
           </TabsList>
           <CardContent className="pt-4">
             <div className="space-y-4">
@@ -85,7 +85,7 @@ const Auth = () => {
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     type="password"
-                    placeholder="Password"
+                    placeholder="Heslo"
                     className="pl-10"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -99,7 +99,7 @@ const Auth = () => {
                   onClick={() => handleEmailAuth(false)}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Signing in..." : "Sign in"}
+                  {isLoading ? "Přihlašování..." : "Přihlásit se"}
                 </Button>
               </TabsContent>
               <TabsContent value="signup" className="mt-0 space-y-4">
@@ -108,7 +108,7 @@ const Auth = () => {
                   onClick={() => handleEmailAuth(true)}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Creating account..." : "Create account"}
+                  {isLoading ? "Vytváření účtu..." : "Vytvořit účet"}
                 </Button>
               </TabsContent>
 
@@ -118,7 +118,7 @@ const Auth = () => {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-background px-2 text-muted-foreground">
-                    Or continue with
+                    Nebo pokračujte s
                   </span>
                 </div>
               </div>
@@ -160,7 +160,7 @@ const Auth = () => {
         </Tabs>
         <CardFooter className="flex flex-col text-xs text-muted-foreground">
           <p className="text-center">
-            By continuing, you agree to our Terms of Service and Privacy Policy
+            Pokračováním souhlasíte s našimi Podmínkami používání a Zásadami ochrany osobních údajů
           </p>
         </CardFooter>
       </Card>

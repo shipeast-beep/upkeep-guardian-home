@@ -46,7 +46,7 @@ const Index: React.FC = () => {
               <div className="mb-6 flex items-center justify-center">
                 <div className="bg-muted/50 p-4 rounded-lg flex items-center gap-2">
                   <ArrowDown className="h-4 w-4 animate-bounce" />
-                  <span>Select a property to filter maintenance events</span>
+                  <span>Vyberte nemovitost pro filtrování údržby</span>
                 </div>
               </div>
             )}
@@ -55,7 +55,7 @@ const Index: React.FC = () => {
               <Link to="/add">
                 <Button className="gap-2">
                   <Plus className="h-4 w-4" />
-                  Add Maintenance Event
+                  Přidat údržbu
                 </Button>
               </Link>
             </div>
@@ -63,15 +63,15 @@ const Index: React.FC = () => {
             <div className="space-y-8">
               <MaintenanceList 
                 maintenanceEvents={upcomingEvents}
-                title="Upcoming Maintenance"
-                emptyMessage="No upcoming maintenance tasks"
+                title="Nadcházející údržba"
+                emptyMessage="Žádné nadcházející údržbářské úkoly"
                 limit={3}
               />
               
               <MaintenanceList 
                 maintenanceEvents={recentEvents}
-                title="Recent Maintenance"
-                emptyMessage="No maintenance history yet"
+                title="Poslední údržba"
+                emptyMessage="Zatím žádné záznamy o údržbě"
                 limit={6}
               />
             </div>
@@ -81,9 +81,9 @@ const Index: React.FC = () => {
             <div className="inline-block p-3 rounded-full bg-upkeep-100 text-upkeep-600 mb-4">
               <Wrench className="h-6 w-6" />
             </div>
-            <h1 className="text-3xl font-bold mb-2">Welcome to UpKeep Guardian</h1>
+            <h1 className="text-3xl font-bold mb-2">Vítejte v aplikaci Udrž to!</h1>
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Your personal property maintenance tracker. Start by adding your first property.
+              Váš osobní pomocník pro sledování údržby nemovitostí. Začněte přidáním své první nemovitosti.
             </p>
           </div>
         )}

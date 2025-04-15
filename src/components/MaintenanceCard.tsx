@@ -1,6 +1,7 @@
 
 import { MaintenanceEvent, Property } from "@/types";
 import { formatDistanceToNow } from "date-fns";
+import { cs } from "date-fns/locale";
 import { Badge } from "@/components/ui/badge";
 import { 
   Card,
@@ -49,6 +50,19 @@ const categoryIcons: Record<string, React.ElementType> = {
   other: Package,
 };
 
+// Map categories to Czech translations
+const categoryTranslations: Record<string, string> = {
+  electrical: "elektřina",
+  plumbing: "vodoinstalace",
+  gas: "plyn",
+  garden: "zahrada",
+  heating: "topení",
+  air_conditioning: "klimatizace",
+  appliances: "spotřebiče",
+  structural: "konstrukce",
+  other: "ostatní",
+};
+
 interface MaintenanceCardProps {
   maintenance: MaintenanceEvent;
   property?: Property;
@@ -62,6 +76,7 @@ const MaintenanceCard: React.FC<MaintenanceCardProps> = ({
 }) => {
   const categoryColor = categoryColors[maintenance.category] || categoryColors.other;
   const CategoryIcon = categoryIcons[maintenance.category] || categoryIcons.other;
+  const categoryName = categoryTranslations[maintenance.category] || maintenance.category.replace("_", " ");
   const date = new Date(maintenance.date);
   
   return (
@@ -85,19 +100,19 @@ const MaintenanceCard: React.FC<MaintenanceCardProps> = ({
           </div>
           <Badge className={`${categoryColor} flex items-center gap-1`}>
             <CategoryIcon className="h-3 w-3" />
-            <span>{maintenance.category.replace("_", " ")}</span>
+            <span>{categoryName}</span>
           </Badge>
         </div>
       </CardHeader>
       <CardContent className="p-4 pt-0 space-y-2">
         <div className="flex items-center text-sm text-muted-foreground">
           <Clock className="mr-2 h-4 w-4" />
-          {formatDistanceToNow(date, { addSuffix: true })}
+          {formatDistanceToNow(date, { addSuffix: true, locale: cs })}
         </div>
         {maintenance.recurringPeriod !== "none" && (
           <div className="flex items-center text-sm text-muted-foreground">
             <CalendarClock className="mr-2 h-4 w-4" />
-            Repeats: {maintenance.recurringPeriod}
+            Opakuje se: {translateRecurringPeriod(maintenance.recurringPeriod)}
           </div>
         )}
         {maintenance.notes && (
@@ -107,5 +122,18 @@ const MaintenanceCard: React.FC<MaintenanceCardProps> = ({
     </Card>
   );
 };
+
+// Helper function to translate recurring period to Czech
+function translateRecurringPeriod(period: string): string {
+  const translations: Record<string, string> = {
+    weekly: "týdně",
+    monthly: "měsíčně",
+    quarterly: "čtvrtletně",
+    biannually: "pololetně",
+    annually: "ročně",
+    none: "nikdy"
+  };
+  return translations[period] || period;
+}
 
 export default MaintenanceCard;

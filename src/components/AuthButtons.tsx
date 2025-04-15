@@ -20,7 +20,7 @@ export const AuthButtons = () => {
           className="gap-2"
         >
           <LogOut className="h-4 w-4" />
-          <span className="hidden md:inline">Sign out</span>
+          <span className="hidden md:inline">Odhlásit se</span>
         </Button>
       </div>
     );
@@ -30,7 +30,7 @@ export const AuthButtons = () => {
     <Link to="/auth">
       <Button variant="outline" size="sm" className="gap-2">
         <LogIn className="h-4 w-4" />
-        <span className="hidden md:inline">Sign in</span>
+        <span className="hidden md:inline">Přihlásit se</span>
       </Button>
     </Link>
   );

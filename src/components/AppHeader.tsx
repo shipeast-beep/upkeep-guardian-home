@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { AuthButtons } from "./AuthButtons";
 
 const AppHeader: React.FC = () => {
   const isMobile = useIsMobile();
@@ -45,28 +46,28 @@ const AppHeader: React.FC = () => {
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
                   >
                     <Home className="h-4 w-4" />
-                    Properties
+                    Nemovitosti
                   </Link>
                   <Link 
                     to="/add" 
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
                   >
                     <Plus className="h-4 w-4" />
-                    Add Maintenance
+                    Přidat údržbu
                   </Link>
                   <Link 
                     to="/history" 
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
                   >
                     <Home className="h-4 w-4" />
-                    Maintenance History
+                    Historie údržby
                   </Link>
                   <Link 
                     to="/settings" 
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent"
                   >
                     <Settings className="h-4 w-4" />
-                    Settings
+                    Nastavení
                   </Link>
                 </nav>
               </SheetContent>
@@ -77,7 +78,7 @@ const AppHeader: React.FC = () => {
             <div className="rounded-full bg-upkeep-600 w-8 h-8 flex items-center justify-center">
               <Home className="h-4 w-4 text-white" />
             </div>
-            <span className="font-semibold text-xl hidden md:inline-block">UpKeep Guardian</span>
+            <span className="font-semibold text-xl hidden md:inline-block">Udrž to!</span>
           </Link>
         </div>
         
@@ -87,11 +88,13 @@ const AppHeader: React.FC = () => {
               <Link to="/add">
                 <Button variant="outline" size="sm" className="mr-2">
                   <Plus className="h-4 w-4 mr-2" />
-                  Add Maintenance
+                  Přidat údržbu
                 </Button>
               </Link>
             </>
           )}
+
+          <AuthButtons />
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -105,17 +108,17 @@ const AppHeader: React.FC = () => {
                     {unreadNotifications.length > 9 ? '9+' : unreadNotifications.length}
                   </Badge>
                 )}
-                <span className="sr-only">Notifications</span>
+                <span className="sr-only">Notifikace</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[300px]">
               <div className="p-2 text-sm font-medium border-b">
-                Notifications
+                Notifikace
               </div>
               <div className="max-h-[300px] overflow-auto">
                 {notifications.length === 0 ? (
                   <div className="p-4 text-center text-sm text-muted-foreground">
-                    No notifications
+                    Žádné notifikace
                   </div>
                 ) : (
                   notifications.slice(0, 5).map(notification => (
@@ -126,7 +129,7 @@ const AppHeader: React.FC = () => {
                       >
                         <div className="font-medium">{notification.maintenanceTitle}</div>
                         <div className="text-xs text-muted-foreground">
-                          Due: {new Date(notification.date).toLocaleDateString()}
+                          Termín: {new Date(notification.date).toLocaleDateString()}
                         </div>
                       </Link>
                     </DropdownMenuItem>
@@ -138,7 +141,7 @@ const AppHeader: React.FC = () => {
                   to="/notifications" 
                   className="block w-full p-2 text-center text-sm text-upkeep-600 hover:underline border-t"
                 >
-                  View all notifications
+                  Zobrazit všechny notifikace
                 </Link>
               )}
             </DropdownMenuContent>
