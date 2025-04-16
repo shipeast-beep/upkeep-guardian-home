@@ -7,7 +7,7 @@ import MaintenanceList from "@/components/MaintenanceList";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { FilePdf, FileDown } from "lucide-react"; 
+import { FileText, FileDown } from "lucide-react"; 
 import { generatePDF } from "@/utils/pdfGenerator";
 import { toast } from "sonner";
 
@@ -49,7 +49,7 @@ const ExportPDF: React.FC = () => {
       <main className="container py-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <FilePdf className="h-5 w-5 text-muted-foreground" />
+            <FileText className="h-5 w-5 text-muted-foreground" />
             <h1 className="text-2xl font-bold">Export do PDF</h1>
           </div>
         </div>
