@@ -4,6 +4,7 @@ import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/sonner";
+import { useStore } from "@/store/useStore";
 
 type AuthContextType = {
   session: Session | null;
@@ -22,6 +23,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { setProperties, setMaintenanceEvents, setNotifications } = useStore();
 
   useEffect(() => {
     // Set up auth state listener FIRST
@@ -30,11 +32,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setSession(session);
         setUser(session?.user ?? null);
         
+        // Handle sign in/out events specifically
         if (event === 'SIGNED_IN') {
           toast.success("Úspěšně přihlášeno!");
           navigate('/');
         } 
         else if (event === 'SIGNED_OUT') {
+          // Clear user data from store on sign out
+          setProperties([]);
+          setMaintenanceEvents([]);
+          setNotifications([]);
           toast.info("Odhlášeno");
           navigate('/auth');
         }
@@ -49,7 +56,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, setProperties, setMaintenanceEvents, setNotifications]);
 
   const signInWithEmail = async (email: string, password: string) => {
     try {

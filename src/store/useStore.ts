@@ -10,7 +10,7 @@ interface State {
   notifications: Notification[];
   selectedPropertyId: string | null;
   isDarkMode: boolean;
-  language: "cs" | "en"; // Added language option
+  language: "cs" | "en"; 
   subscriptionStatus: {
     isSubscribed: boolean;
     subscriptionType: "free" | "monthly" | "yearly";
@@ -22,16 +22,19 @@ interface State {
   updateProperty: (id: string, property: Partial<Property>) => void;
   deleteProperty: (id: string) => void;
   selectProperty: (id: string | null) => void;
+  setProperties: (properties: Property[]) => void;
   
   // Maintenance actions
   addMaintenanceEvent: (event: Omit<MaintenanceEvent, "id">) => string;
   updateMaintenanceEvent: (id: string, event: Partial<MaintenanceEvent>) => void;
   deleteMaintenanceEvent: (id: string) => void;
+  setMaintenanceEvents: (events: MaintenanceEvent[]) => void;
   
   // Notification actions
   addNotification: (notification: Omit<Notification, "id">) => void;
   markNotificationAsRead: (id: string) => void;
   deleteNotification: (id: string) => void;
+  setNotifications: (notifications: Notification[]) => void;
   
   // Settings actions
   toggleDarkMode: () => void;
@@ -102,6 +105,8 @@ export const useStore = create<State>()(
       })),
       
       selectProperty: (id) => set({ selectedPropertyId: id }),
+
+      setProperties: (properties) => set({ properties }),
       
       // Maintenance actions
       addMaintenanceEvent: (event) => {
@@ -183,6 +188,8 @@ export const useStore = create<State>()(
         maintenanceEvents: state.maintenanceEvents.filter(e => e.id !== id),
         notifications: state.notifications.filter(n => n.maintenanceEventId !== id)
       })),
+
+      setMaintenanceEvents: (events) => set({ maintenanceEvents: events }),
       
       // Notification actions
       addNotification: (notification) => set((state) => ({
@@ -198,6 +205,8 @@ export const useStore = create<State>()(
       deleteNotification: (id) => set((state) => ({
         notifications: state.notifications.filter(n => n.id !== id)
       })),
+
+      setNotifications: (notifications) => set({ notifications }),
       
       // Settings actions
       toggleDarkMode: () => set((state) => ({

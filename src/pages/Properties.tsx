@@ -46,6 +46,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useAuth } from "@/contexts/AuthContext";
 
 const propertyFormSchema = z.object({
   name: z.string().min(1, "Název nemovitosti je povinný"),
@@ -66,6 +67,7 @@ const Properties: React.FC = () => {
   } = useStore();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingPropertyId, setEditingPropertyId] = useState<string | null>(null);
+  const { user } = useAuth();
   
   const form = useForm<PropertyFormValues>({
     resolver: zodResolver(propertyFormSchema),
@@ -129,14 +131,16 @@ const Properties: React.FC = () => {
             <Building2 className="h-5 w-5 text-muted-foreground" />
             <h1 className="text-2xl font-bold">Moje nemovitosti</h1>
           </div>
-          {/* Tlačítko Add Property bylo odstraněno */}
+          {/* Button was removed from here */}
         </div>
         
         {properties.length === 0 ? (
-          <div className="p-12 text-center border rounded-lg bg-muted/50">
+          <div className="p-12 text-center border rounded-lg bg-muted/50 flex flex-col items-center justify-center">
             <Building2 className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <p className="text-muted-foreground">Zatím nemáte žádné nemovitosti</p>
-            <Button onClick={openAddDialog} className="mt-4">
+            <p className="text-muted-foreground mb-6">
+              {user ? "Zatím nemáte žádné nemovitosti" : "Pro správu nemovitostí se prosím přihlaste"}
+            </p>
+            <Button onClick={openAddDialog} className="mt-2">
               <Plus className="h-4 w-4 mr-2" />
               Přidejte svou první nemovitost
             </Button>
@@ -145,7 +149,7 @@ const Properties: React.FC = () => {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {properties.map(property => (
               <Card key={property.id} className="overflow-hidden">
-                <CardHeader className="bg-upkeep-50 p-4">
+                <CardHeader className="bg-upkeep-50 dark:bg-upkeep-900/30 p-4">
                   <div className="flex items-start justify-between">
                     <CardTitle className="text-lg">{property.name}</CardTitle>
                     <Badge>{property.type === "house" ? "Dům" : 
@@ -296,4 +300,3 @@ const Properties: React.FC = () => {
 };
 
 export default Properties;
-
