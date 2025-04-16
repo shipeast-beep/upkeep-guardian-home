@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,20 +36,26 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom colors for our app */
+    --upkeep-50: 208 100% 97%;
+    --upkeep-100: 210 100% 95%;
+    --upkeep-200: 208 94% 85%;
+    --upkeep-300: 208 87% 75%;
+    --upkeep-400: 213 90% 65%;
+    --upkeep-500: 213 94% 55%;
+    --upkeep-600: 217 91% 50%;
+    --upkeep-700: 217 91% 40%;
+    --upkeep-800: 217 86% 35%;
+    --upkeep-900: 220 83% 29%;
+    --upkeep-950: 223 76% 15%;
   }
 
   .dark {

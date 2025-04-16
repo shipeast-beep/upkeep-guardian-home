@@ -9,6 +9,13 @@ interface State {
   maintenanceEvents: MaintenanceEvent[];
   notifications: Notification[];
   selectedPropertyId: string | null;
+  isDarkMode: boolean;
+  language: "cs" | "en"; // Added language option
+  subscriptionStatus: {
+    isSubscribed: boolean;
+    subscriptionType: "free" | "monthly" | "yearly";
+    expiryDate: Date | null;
+  };
   
   // Property actions
   addProperty: (property: Omit<Property, "id">) => void;
@@ -25,6 +32,15 @@ interface State {
   addNotification: (notification: Omit<Notification, "id">) => void;
   markNotificationAsRead: (id: string) => void;
   deleteNotification: (id: string) => void;
+  
+  // Settings actions
+  toggleDarkMode: () => void;
+  setLanguage: (language: "cs" | "en") => void;
+  setSubscriptionStatus: (status: {
+    isSubscribed: boolean;
+    subscriptionType: "free" | "monthly" | "yearly";
+    expiryDate: Date | null;
+  }) => void;
 }
 
 // Helper function to calculate next due date based on recurring period
@@ -57,6 +73,13 @@ export const useStore = create<State>()(
       maintenanceEvents: [],
       notifications: [],
       selectedPropertyId: null,
+      isDarkMode: false,
+      language: "cs",
+      subscriptionStatus: {
+        isSubscribed: false,
+        subscriptionType: "free",
+        expiryDate: null,
+      },
       
       // Property actions
       addProperty: (property) => set((state) => ({
@@ -174,7 +197,16 @@ export const useStore = create<State>()(
       
       deleteNotification: (id) => set((state) => ({
         notifications: state.notifications.filter(n => n.id !== id)
-      }))
+      })),
+      
+      // Settings actions
+      toggleDarkMode: () => set((state) => ({
+        isDarkMode: !state.isDarkMode
+      })),
+      
+      setLanguage: (language) => set({ language }),
+      
+      setSubscriptionStatus: (status) => set({ subscriptionStatus: status }),
     }),
     {
       name: "upkeep-guardian-storage",
@@ -182,7 +214,10 @@ export const useStore = create<State>()(
         properties: state.properties,
         maintenanceEvents: state.maintenanceEvents,
         notifications: state.notifications,
-        selectedPropertyId: state.selectedPropertyId
+        selectedPropertyId: state.selectedPropertyId,
+        isDarkMode: state.isDarkMode,
+        language: state.language,
+        subscriptionStatus: state.subscriptionStatus
       })
     }
   )
