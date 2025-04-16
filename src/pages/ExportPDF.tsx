@@ -7,7 +7,7 @@ import MaintenanceList from "@/components/MaintenanceList";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { FileDown } from "lucide-react"; 
+import { FilePdf, FileDown } from "lucide-react"; 
 import { generatePDF } from "@/utils/pdfGenerator";
 import { toast } from "sonner";
 
@@ -17,6 +17,7 @@ const ExportPDF: React.FC = () => {
   const selectedPropertyId = useStore((state) => state.selectedPropertyId);
   const selectedProperty = properties.find(p => p.id === selectedPropertyId);
   const [includeImages, setIncludeImages] = useState(true);
+  const [isGenerating, setIsGenerating] = useState(false);
   
   const filteredEvents = selectedPropertyId
     ? maintenanceEvents.filter(event => event.propertyId === selectedPropertyId)
@@ -30,12 +31,15 @@ const ExportPDF: React.FC = () => {
 
     const propertyName = selectedProperty ? selectedProperty.name : 'Všechny nemovitosti';
     
+    setIsGenerating(true);
     try {
       await generatePDF(filteredEvents, propertyName, includeImages);
       toast.success("PDF vygenerováno úspěšně!");
     } catch (error: any) {
       console.error("Chyba při generování PDF:", error);
-      toast.error("Chyba při generování PDF: " + error.message);
+      toast.error("Chyba při generování PDF: " + (error.message || "Neznámá chyba"));
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -45,7 +49,7 @@ const ExportPDF: React.FC = () => {
       <main className="container py-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <FileDown className="h-5 w-5 text-muted-foreground" />
+            <FilePdf className="h-5 w-5 text-muted-foreground" />
             <h1 className="text-2xl font-bold">Export do PDF</h1>
           </div>
         </div>
@@ -66,9 +70,12 @@ const ExportPDF: React.FC = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button onClick={handleGeneratePdf}>
+            <Button 
+              onClick={handleGeneratePdf} 
+              disabled={isGenerating || filteredEvents.length === 0}
+            >
               <FileDown className="h-4 w-4 mr-2" />
-              Generovat PDF
+              {isGenerating ? "Generuji PDF..." : "Generovat PDF"}
             </Button>
           </CardFooter>
         </Card>

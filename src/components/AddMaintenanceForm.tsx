@@ -83,6 +83,7 @@ type MaintenanceFormValues = z.infer<typeof maintenanceFormSchema>;
 const AddMaintenanceForm: React.FC = () => {
   const { properties, selectedPropertyId, addMaintenanceEvent } = useStore();
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   
   // Default form values
@@ -112,23 +113,36 @@ const AddMaintenanceForm: React.FC = () => {
   };
   
   const onSubmit = (data: MaintenanceFormValues) => {
+    if (isSubmitting) return;
+    
     if (!selectedPropertyId) {
       toast.error("Vyberte nejprve nemovitost");
       return;
     }
     
-    addMaintenanceEvent({
-      ...data,
-      propertyId: selectedPropertyId,
-      photo: photoPreview || undefined,
-      title: data.title,
-      date: data.date,
-      category: data.category,
-      recurringPeriod: data.recurringPeriod
-    });
+    setIsSubmitting(true);
     
-    toast.success("Událost údržby byla úspěšně přidána");
-    navigate("/");
+    try {
+      const newEvent = {
+        ...data,
+        propertyId: selectedPropertyId,
+        photo: photoPreview || undefined,
+        title: data.title,
+        date: data.date,
+        category: data.category,
+        recurringPeriod: data.recurringPeriod
+      };
+      
+      const eventId = addMaintenanceEvent(newEvent);
+      
+      toast.success("Událost údržby byla úspěšně přidána");
+      // Redirect to the maintenance detail page
+      navigate(`/maintenance/${eventId}`);
+    } catch (error) {
+      console.error("Chyba při přidávání údržby:", error);
+      toast.error("Došlo k chybě při ukládání údržby");
+      setIsSubmitting(false);
+    }
   };
   
   if (properties.length === 0) {
@@ -327,8 +341,12 @@ const AddMaintenanceForm: React.FC = () => {
             )}
           />
           
-          <Button type="submit" className="w-full md:w-auto">
-            Uložit událost údržby
+          <Button 
+            type="submit" 
+            className="w-full md:w-auto"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Ukládám..." : "Uložit událost údržby"}
           </Button>
         </form>
       </Form>

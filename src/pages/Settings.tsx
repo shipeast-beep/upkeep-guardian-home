@@ -14,10 +14,16 @@ import { useNavigate } from "react-router-dom";
 const Settings = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = React.useState("profile");
 
   const handleSignOut = async () => {
     await signOut();
     navigate('/auth');
+  };
+
+  // Synchronize mobile and desktop tabs
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
   };
 
   return (
@@ -31,7 +37,12 @@ const Settings = () => {
                 <CardTitle className="text-lg">Nastavení</CardTitle>
               </CardHeader>
               <CardContent className="p-0">
-                <Tabs defaultValue="profile" orientation="vertical" className="w-full">
+                <Tabs 
+                  value={activeTab} 
+                  onValueChange={handleTabChange} 
+                  orientation="vertical" 
+                  className="w-full"
+                >
                   <TabsList className="w-full flex flex-col items-stretch h-auto">
                     <TabsTrigger value="profile" className="justify-start">
                       <User className="w-4 h-4 mr-2" />
@@ -56,7 +67,12 @@ const Settings = () => {
           </div>
 
           <div className="w-full md:w-3/4 lg:w-4/5">
-            <Tabs defaultValue="profile" orientation="horizontal" className="w-full">
+            <Tabs 
+              value={activeTab} 
+              onValueChange={handleTabChange} 
+              orientation="horizontal" 
+              className="w-full"
+            >
               <TabsContent value="profile" className="m-0">
                 <Card>
                   <CardHeader>

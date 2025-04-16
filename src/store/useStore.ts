@@ -17,7 +17,7 @@ interface State {
   selectProperty: (id: string | null) => void;
   
   // Maintenance actions
-  addMaintenanceEvent: (event: Omit<MaintenanceEvent, "id">) => void;
+  addMaintenanceEvent: (event: Omit<MaintenanceEvent, "id">) => string;
   updateMaintenanceEvent: (id: string, event: Partial<MaintenanceEvent>) => void;
   deleteMaintenanceEvent: (id: string) => void;
   
@@ -82,9 +82,10 @@ export const useStore = create<State>()(
       
       // Maintenance actions
       addMaintenanceEvent: (event) => {
+        const newEventId = crypto.randomUUID();
         const newEvent = { 
           ...event, 
-          id: crypto.randomUUID(),
+          id: newEventId,
           nextDueDate: calculateNextDueDate(event.date, event.recurringPeriod) 
         };
         
@@ -105,6 +106,8 @@ export const useStore = create<State>()(
             }]
           }));
         }
+        
+        return newEventId;
       },
       
       updateMaintenanceEvent: (id, eventUpdate) => set((state) => {
