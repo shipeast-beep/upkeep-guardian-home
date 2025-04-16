@@ -42,7 +42,7 @@ const PricingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <AppHeader />
-      <main className="container py-6">
+      <main className="container py-6 flex flex-col items-center">
         <h1 className="text-2xl font-bold mb-6 text-center">Zvolte si plán</h1>
         
         <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
@@ -133,10 +133,9 @@ const PricingPage: React.FC = () => {
         </div>
 
         <div className="mt-10 max-w-3xl mx-auto text-center">
-          <h2 className="text-lg font-semibold mb-4">O aplikaci UpKeep Guardian</h2>
+          <h2 className="text-lg font-semibold mb-4">O aplikaci Udrž to!</h2>
           <div className="bg-muted/30 p-6 rounded-lg">
-            <p className="mb-4"><strong>Technologie:</strong> React, Vite, TypeScript, Tailwind CSS, shadcn/ui</p>
-            <p className="mb-4">UpKeep Guardian je moderní aplikace pro správu údržby nemovitostí. Pomáhá vlastníkům a správcům nemovitostí sledovat a plánovat pravidelnou údržbu pro zajištění dlouhé životnosti a bezproblémového provozu.</p>
+            <p className="mb-4">Udrž to! je moderní aplikace pro správu údržby nemovitostí. Pomáhá vlastníkům a správcům nemovitostí sledovat a plánovat pravidelnou údržbu pro zajištění dlouhé životnosti a bezproblémového provozu.</p>
             <p>Aplikace vám pomůže zaznamenat, co jste kdy opravovali, investice do nemovitostí, a připomene vám plánovanou údržbu včas.</p>
           </div>
         </div>

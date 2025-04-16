@@ -14,6 +14,7 @@ type AuthContextType = {
   signInWithGoogle: () => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  createSubscriptionCheckout: () => Promise<string | null>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -110,6 +111,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  // Placeholder for Stripe subscription checkout
+  // This would be replaced with actual implementation once Supabase integration is set up
+  const createSubscriptionCheckout = async (): Promise<string | null> => {
+    if (!user) {
+      toast.error("Musíte být přihlášeni pro zakoupení předplatného");
+      return null;
+    }
+
+    try {
+      // Here we would invoke a Supabase Edge Function that would create a checkout session
+      // For now, we'll just simulate it with a toast notification
+      toast.info("Připravuje se platební brána...");
+      
+      // Normally, this would return the URL to redirect to Stripe checkout
+      return null;
+    } catch (error: any) {
+      toast.error(error.message || "Chyba při vytváření platby");
+      return null;
+    }
+  };
+
   const value = {
     session,
     user,
@@ -118,6 +140,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signInWithGoogle,
     signUp,
     signOut,
+    createSubscriptionCheckout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
