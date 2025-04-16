@@ -49,31 +49,31 @@ import { useNavigate } from "react-router-dom";
 import { Category, RecurringPeriod } from "../types";
 
 const CATEGORIES: { value: Category; label: string; icon: React.ElementType }[] = [
-  { value: "electrical", label: "Electrical", icon: Zap },
-  { value: "plumbing", label: "Plumbing", icon: Droplet },
-  { value: "gas", label: "Gas", icon: Flame },
-  { value: "garden", label: "Garden", icon: Leaf },
-  { value: "heating", label: "Heating", icon: Thermometer },
-  { value: "air_conditioning", label: "Air Conditioning", icon: Fan },
-  { value: "appliances", label: "Appliances", icon: Monitor },
-  { value: "structural", label: "Structural", icon: Building },
-  { value: "other", label: "Other", icon: Package },
+  { value: "electrical", label: "Elektřina", icon: Zap },
+  { value: "plumbing", label: "Vodoinstalace", icon: Droplet },
+  { value: "gas", label: "Plyn", icon: Flame },
+  { value: "garden", label: "Zahrada", icon: Leaf },
+  { value: "heating", label: "Topení", icon: Thermometer },
+  { value: "air_conditioning", label: "Klimatizace", icon: Fan },
+  { value: "appliances", label: "Spotřebiče", icon: Monitor },
+  { value: "structural", label: "Konstrukce", icon: Building },
+  { value: "other", label: "Ostatní", icon: Package },
 ];
 
 const RECURRING_PERIODS: { value: RecurringPeriod; label: string }[] = [
-  { value: "none", label: "No Reminder" },
-  { value: "weekly", label: "Weekly" },
-  { value: "monthly", label: "Monthly" },
-  { value: "quarterly", label: "Every 3 Months" },
-  { value: "biannually", label: "Every 6 Months" },
-  { value: "annually", label: "Yearly" },
+  { value: "none", label: "Bez připomenutí" },
+  { value: "weekly", label: "Týdně" },
+  { value: "monthly", label: "Měsíčně" },
+  { value: "quarterly", label: "Čtvrtletně" },
+  { value: "biannually", label: "Pololetně" },
+  { value: "annually", label: "Ročně" },
 ];
 
 const maintenanceFormSchema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
+  title: z.string().min(1, { message: "Název je povinný" }),
   category: z.enum(["electrical", "plumbing", "gas", "garden", "heating", 
                   "air_conditioning", "appliances", "structural", "other"] as const),
-  date: z.date({ required_error: "Date is required" }),
+  date: z.date({ required_error: "Datum je povinné" }),
   notes: z.string().optional(),
   recurringPeriod: z.enum(["none", "weekly", "monthly", "quarterly", "biannually", "annually"] as const),
 });
@@ -113,7 +113,7 @@ const AddMaintenanceForm: React.FC = () => {
   
   const onSubmit = (data: MaintenanceFormValues) => {
     if (!selectedPropertyId) {
-      toast.error("Please select a property first");
+      toast.error("Vyberte nejprve nemovitost");
       return;
     }
     
@@ -121,13 +121,13 @@ const AddMaintenanceForm: React.FC = () => {
       ...data,
       propertyId: selectedPropertyId,
       photo: photoPreview || undefined,
-      title: data.title, // Ensure title is included
-      date: data.date, // Ensure date is included
-      category: data.category, // Ensure category is included
-      recurringPeriod: data.recurringPeriod // Ensure recurringPeriod is included
+      title: data.title,
+      date: data.date,
+      category: data.category,
+      recurringPeriod: data.recurringPeriod
     });
     
-    toast.success("Maintenance event added successfully");
+    toast.success("Událost údržby byla úspěšně přidána");
     navigate("/");
   };
   
@@ -138,9 +138,9 @@ const AddMaintenanceForm: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Add Maintenance Event</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Přidat událost údržby</h2>
         <p className="text-muted-foreground">
-          Record a new maintenance task for your property
+          Zaznamenejte nový úkol údržby pro vaši nemovitost
         </p>
       </div>
       
@@ -151,12 +151,12 @@ const AddMaintenanceForm: React.FC = () => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Název</FormLabel>
                 <FormControl>
-                  <Input placeholder="Filter replacement" {...field} />
+                  <Input placeholder="Výměna filtru" {...field} />
                 </FormControl>
                 <FormDescription>
-                  Enter a descriptive title for this maintenance event
+                  Zadejte popisný název pro tuto událost údržby
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -168,11 +168,11 @@ const AddMaintenanceForm: React.FC = () => {
             name="category"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category</FormLabel>
+                <FormLabel>Kategorie</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a category" />
+                      <SelectValue placeholder="Vyberte kategorii" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -190,7 +190,7 @@ const AddMaintenanceForm: React.FC = () => {
                   </SelectContent>
                 </Select>
                 <FormDescription>
-                  Select the category that best describes this maintenance
+                  Vyberte kategorii, která nejlépe popisuje tuto údržbu
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -202,7 +202,7 @@ const AddMaintenanceForm: React.FC = () => {
             name="date"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Date</FormLabel>
+                <FormLabel>Datum</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -216,7 +216,7 @@ const AddMaintenanceForm: React.FC = () => {
                         {field.value ? (
                           format(field.value, "PPP")
                         ) : (
-                          <span>Pick a date</span>
+                          <span>Vyberte datum</span>
                         )}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
@@ -233,7 +233,7 @@ const AddMaintenanceForm: React.FC = () => {
                   </PopoverContent>
                 </Popover>
                 <FormDescription>
-                  When was this maintenance performed?
+                  Kdy byla tato údržba provedena?
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -245,10 +245,10 @@ const AddMaintenanceForm: React.FC = () => {
             name="notes"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Notes</FormLabel>
+                <FormLabel>Poznámky</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Any additional details about this maintenance event"
+                    placeholder="Jakékoliv další podrobnosti o této události údržby"
                     className="min-h-32"
                     {...field}
                   />
@@ -259,13 +259,13 @@ const AddMaintenanceForm: React.FC = () => {
           />
           
           <div className="space-y-2">
-            <FormLabel>Photo</FormLabel>
+            <FormLabel>Fotografie</FormLabel>
             <div className="flex items-center justify-center border-2 border-dashed rounded-md p-4 cursor-pointer bg-muted/50" onClick={() => document.getElementById("photo-upload")?.click()}>
               {photoPreview ? (
                 <div className="relative w-full max-w-md">
                   <img
                     src={photoPreview}
-                    alt="Preview"
+                    alt="Náhled"
                     className="rounded-md max-h-64 mx-auto"
                   />
                   <Button
@@ -278,14 +278,14 @@ const AddMaintenanceForm: React.FC = () => {
                       setPhotoPreview(null);
                     }}
                   >
-                    Change
+                    Změnit
                   </Button>
                 </div>
               ) : (
                 <div className="flex flex-col items-center">
                   <ImagePlus className="h-12 w-12 text-muted-foreground mb-2" />
                   <p className="text-sm text-muted-foreground">
-                    Click to upload a photo (receipt, before/after)
+                    Klikněte pro nahrání fotografie (účtenka, před/po)
                   </p>
                 </div>
               )}
@@ -304,11 +304,11 @@ const AddMaintenanceForm: React.FC = () => {
             name="recurringPeriod"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Recurring Reminder</FormLabel>
+                <FormLabel>Opakující se připomenutí</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a reminder frequency" />
+                      <SelectValue placeholder="Vyberte frekvenci připomenutí" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -320,7 +320,7 @@ const AddMaintenanceForm: React.FC = () => {
                   </SelectContent>
                 </Select>
                 <FormDescription>
-                  Set a recurring reminder for this maintenance task
+                  Nastavte opakující se připomenutí pro tento úkol údržby
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -328,7 +328,7 @@ const AddMaintenanceForm: React.FC = () => {
           />
           
           <Button type="submit" className="w-full md:w-auto">
-            Save Maintenance Event
+            Uložit událost údržby
           </Button>
         </form>
       </Form>

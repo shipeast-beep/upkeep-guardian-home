@@ -1,4 +1,3 @@
-
 import { jsPDF } from "jspdf";
 import { MaintenanceEvent, Property } from "@/types";
 import { format } from "date-fns";
@@ -54,12 +53,8 @@ export const generatePDF = async (
     let yPosition = (doc as any).lastAutoTable.finalY + 15;
     
     for (const event of maintenanceEvents) {
-      // Check if the event has an images property that's an array or imageUrl property
-      const hasImage = (
-        event.images && Array.isArray(event.images) && event.images.length > 0
-      ) || (
-        'imageUrl' in event && typeof (event as any).imageUrl === 'string' && (event as any).imageUrl
-      );
+      // Check if the event has an photo property
+      const hasImage = 'photo' in event && typeof (event as any).photo === 'string' && (event as any).photo;
       
       if (hasImage) {
         try {

@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
-import { Bell, User, Language, Moon, Sun, CreditCard, LogOut } from "lucide-react";
+import { Bell, User, Languages, Moon, Sun, CreditCard, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
@@ -68,7 +68,7 @@ const Settings = () => {
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">Jméno</Label>
-                      <Input id="name" placeholder="Jméno" defaultValue={user?.displayName || ""} />
+                      <Input id="name" placeholder="Jméno" defaultValue={user?.email?.split('@')[0] || ""} />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
