@@ -1,12 +1,13 @@
+
 import React, { useState } from "react";
 import AppHeader from "@/components/AppHeader";
 import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
-import { MaintenanceList } from "@/components/MaintenanceList";
+import MaintenanceList from "@/components/MaintenanceList";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { FileDown } from "lucide-react"; // Opraveno: použit správný FileDown místo FilePdf
+import { FileDown } from "lucide-react"; 
 import { generatePDF } from "@/utils/pdfGenerator";
 import { toast } from "sonner";
 
@@ -77,7 +78,12 @@ const ExportPDF: React.FC = () => {
           {filteredEvents.length === 0 ? (
             <p className="text-muted-foreground">Žádné záznamy údržby k zobrazení.</p>
           ) : (
-            <MaintenanceList maintenanceEvents={filteredEvents} />
+            <MaintenanceList 
+              maintenanceEvents={filteredEvents} 
+              title="Údržba" 
+              emptyMessage="Žádné záznamy údržby k zobrazení."
+              showProperties={true}
+            />
           )}
         </div>
       </main>

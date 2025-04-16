@@ -1,4 +1,3 @@
-
 import { jsPDF } from "jspdf";
 import { MaintenanceEvent, Property } from "@/types";
 import { format } from "date-fns";
@@ -9,6 +8,110 @@ declare module "jspdf" {
     autoTable: (options: any) => jsPDF;
   }
 }
+
+// Export generatePDF function for use in the ExportPDF component
+export const generatePDF = async (
+  maintenanceEvents: MaintenanceEvent[],
+  propertyName: string,
+  includeImages: boolean
+) => {
+  const doc = new jsPDF();
+
+  // Nadpis dokumentu
+  doc.setFontSize(20);
+  doc.text("Historie údržby", 105, 15, { align: "center" });
+  doc.setFontSize(12);
+  doc.text(`Nemovitost: ${propertyName}`, 105, 22, { align: "center" });
+  doc.text(`Vygenerováno: ${format(new Date(), "dd.MM.yyyy")}`, 105, 28, { align: "center" });
+
+  // Tabulka údržby
+  const tableData = maintenanceEvents.map(event => [
+    format(new Date(event.date), "dd.MM.yyyy"),
+    event.title,
+    translateCategory(event.category),
+    translateRecurringPeriod(event.recurringPeriod),
+    event.notes || "",
+  ]);
+
+  doc.autoTable({
+    startY: 35,
+    head: [["Datum", "Název", "Kategorie", "Periodicita", "Poznámky"]],
+    body: tableData,
+    margin: { top: 10 },
+    styles: { fontSize: 10, cellPadding: 3 },
+    columnStyles: {
+      0: { cellWidth: 25 },
+      1: { cellWidth: 40 },
+      2: { cellWidth: 25 },
+      3: { cellWidth: 25 },
+      4: { cellWidth: 70 },
+    },
+  });
+
+  // Přidání obrázků, pokud jsou k dispozici a uživatel je chce zahrnout
+  if (includeImages) {
+    let yPosition = (doc as any).lastAutoTable.finalY + 15;
+    
+    for (const event of maintenanceEvents) {
+      if (event.imageUrl) {
+        try {
+          if (yPosition > 250) {
+            doc.addPage();
+            yPosition = 20;
+          }
+          
+          doc.text(`Obrázek k údržbě: ${event.title}`, 14, yPosition);
+          yPosition += 10;
+          
+          // Poznámka: V reálné implementaci by zde byl kód pro načtení a vložení obrázku
+          // Nyní jen přidáme zástupný text místo obrázku
+          doc.rect(14, yPosition, 180, 50);
+          doc.text("Místo pro obrázek údržby", 105, yPosition + 25, { align: "center" });
+          
+          yPosition += 60;
+        } catch (error) {
+          console.error("Chyba při přidávání obrázku:", error);
+        }
+      }
+    }
+  }
+
+  // Stažení PDF
+  return doc.save(`udrzba_${propertyName.replace(/ /g, "_")}.pdf`);
+};
+
+// Pomocné funkce pro překlad kategorií a periodicity
+
+// Přeložení kategorií do češtiny
+const translateCategory = (category: string) => {
+  const translations: Record<string, string> = {
+    electrical: "Elektřina",
+    plumbing: "Vodoinstalace",
+    gas: "Plyn",
+    garden: "Zahrada",
+    heating: "Topení",
+    air_conditioning: "Klimatizace",
+    appliances: "Spotřebiče",
+    structural: "Konstrukce",
+    other: "Ostatní",
+  };
+  
+  return translations[category] || category;
+};
+
+// Přeložení periodicity do češtiny
+const translateRecurringPeriod = (period: string) => {
+  const translations: Record<string, string> = {
+    none: "Nikdy",
+    weekly: "Týdně",
+    monthly: "Měsíčně",
+    quarterly: "Čtvrtletně",
+    biannually: "Pololetně",
+    annually: "Ročně",
+  };
+  
+  return translations[period] || period;
+};
 
 export const generateMaintenancePDF = (
   maintenanceEvents: MaintenanceEvent[],
