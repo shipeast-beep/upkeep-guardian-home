@@ -1,3 +1,4 @@
+
 import { jsPDF } from "jspdf";
 import { MaintenanceEvent, Property } from "@/types";
 import { format } from "date-fns";
@@ -53,7 +54,14 @@ export const generatePDF = async (
     let yPosition = (doc as any).lastAutoTable.finalY + 15;
     
     for (const event of maintenanceEvents) {
-      if (event.imageUrl) {
+      // Check if the event has an images property that's an array or imageUrl property
+      const hasImage = (
+        event.images && Array.isArray(event.images) && event.images.length > 0
+      ) || (
+        'imageUrl' in event && typeof (event as any).imageUrl === 'string' && (event as any).imageUrl
+      );
+      
+      if (hasImage) {
         try {
           if (yPosition > 250) {
             doc.addPage();
